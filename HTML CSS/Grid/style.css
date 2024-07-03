@@ -1,0 +1,66 @@
+* 
+{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.shape-1 
+{
+    width: 100px;
+    height: 150px;
+    background-color: antiquewhite;
+}
+.shape-2
+{
+    width: 80px;
+    height: 90px;
+    background-color: rgb(221, 127, 6);
+}
+.shape-3 
+{
+    width: 50px;
+    height: 180px;
+    background-color: rgb(169, 13, 93);
+}
+.shape-4
+{
+    width: 100px;
+    height: 150px;
+    background-color: rgb(43, 41, 38);
+}
+.shape-5
+{
+    width: 75px;
+    height: 75px;
+    background-color: rgb(4, 187, 111);
+}
+.shape-6
+{
+    width: 120px;
+    height: 75px;
+    background-color: rgb(178, 187, 4);
+    align-self: end;
+    justify-self:  start;
+}
+.shape-7
+{
+    width: 100px;
+    height: 75px;
+    background-color: rgb(76, 7, 117);
+}
+
+.shape-container 
+{
+    width: 500px;
+    height: 600px;
+    background-color: rgb(10, 232, 158);
+
+    display: grid;
+    grid-template-columns: 200px 150px;
+    align-content: stretch;
+    /* justify-content: end; */
+    align-items: center;
+    justify-items: end;
+    /* grid-template-rows: 100px 100px; */
+}
