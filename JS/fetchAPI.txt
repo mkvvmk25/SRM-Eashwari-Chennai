@@ -1,0 +1,52 @@
+let btn = document.querySelector(".btn");
+let dogCont = document.querySelector(".dogs-container");
+btn.addEventListener("click", function (e) {
+	getRandomDogImages();
+});
+
+// https://bit.ly/QW-160724
+
+
+function createDog(urlString) {
+	let htmlstring = `
+                <div class="dog">
+                    <img class="dog-img" src="${urlString}"/>
+                </div>`;
+
+	// add in dogs container
+	dogCont.insertAdjacentHTML("beforeend", htmlstring);
+}
+
+function getRandomDogImages() {
+	let obj = [];
+	console.log("1");
+	fetch("https://dog.ceo/api/breeds/image/random")
+		.then(function (fullfilled) {
+			console.log("2");
+			return fullfilled.json();
+		})
+		.then(function (fullfilled) {
+			console.log("3");
+			console.log(fullfilled);
+            createDog(fullfilled.message);
+			return fullfilled;
+		});
+
+	console.log("4");
+}
+
+getRandomDogImages();
+
+// let handlePromise = promise
+//     .then(
+//         function (fullfilled) {
+// 	console.log("handlePromise", fullfilled.json());
+// 	return fullfilled;
+// });
+
+// console.log(handlePromise);
+
+// let handler2 = handlePromise.then(function (fullfilled) {
+// 	// console.log("handler2", fullfilled);
+//     return fullfilled;
+// });
