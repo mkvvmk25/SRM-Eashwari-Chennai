@@ -142,6 +142,38 @@ class LinkedList
             }
             return -1; 
         }
+        int deleteEnd()
+        {
+            if(head == NULL)
+            {
+                cout << " NO ELE to DEL!!!" <<"\n";
+            }
+            else if(head == tail)
+            {
+                // one ele 
+                Node *t = head;
+                head = NULL;
+                tail = NULL; 
+                length--;
+                return t->value; 
+                
+            }
+            else 
+            {
+                
+                Node *t = head; // A1
+                while(t->nextAddress != tail )
+                {
+                    t = t->nextAddress;  // A3->ne->ne
+                }
+                Node *ln = tail; 
+                t->nextAddress = NULL; 
+                tail = t;
+                length--;
+                return ln->value;
+            }
+            return -1; 
+        }
 }; 
 
 int main()
@@ -160,9 +192,11 @@ int main()
     link1.insertMid(120, 1);
     link1.insertMid(320, 12);
     link1.printLL();
-    link1.deleteBeg();
+    link1.deleteEnd();
+    link1.deleteEnd();
+    link1.deleteEnd();
     link1.printLL();
 }
 
 
-// https://bit.ly/CC-240724 
+// https://bit.ly/CC-240724
