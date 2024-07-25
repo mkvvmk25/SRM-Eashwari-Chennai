@@ -14,7 +14,6 @@ class Node
         }
 };
 
-
 class LinkedList
 {
     public:
@@ -216,6 +215,179 @@ class LinkedList
             return -1; 
         }
 }; 
+
+class StackLinkedList
+{
+    public:
+        Node *head;
+        Node *tail;
+        int length;
+     
+        StackLinkedList()
+        {
+            head = NULL; 
+            tail = NULL; 
+            length = 0; 
+        }
+
+        void printLL()
+        {
+            Node *temp = head;
+            while(temp != NULL)
+            {
+                cout << temp->value <<" "; 
+                temp = temp->nextAddress;
+            }
+            cout << "\n";
+        }
+
+        bool isEmpty()
+        {
+            if(head == NULL)
+            {
+                return true;
+            }
+            return false; 
+        }
+
+        int peekElement()
+        {
+            if(tail == NULL)
+            {
+                cout << "stack underFlow!!!";
+                return -1;
+            }
+            return tail->value; 
+        }
+
+        void insertEnd(int val)
+        {
+            Node *newNode = new Node(val); 
+            // Node *newNode = (Node*)malloc(sizeof(Node)); 
+            // newNode->value = val;
+            // newNode->nextAddress = NULL; 
+
+            if(head == NULL && length == 0)
+            {
+                head = newNode;
+                tail = newNode;
+            }
+            else
+            {
+                tail->nextAddress = newNode;
+                tail = newNode;
+            }
+            length++;
+            
+        }
+
+        int deleteEnd()
+        {
+            if(head == NULL)
+            {
+                cout << " NO ELE to DEL!!!" <<"\n";
+            }
+            else if(head == tail)
+            {
+                // one ele 
+                Node *t = head;
+                head = NULL;
+                tail = NULL; 
+                length--;
+                return t->value; 
+                
+            }
+            else 
+            {
+                
+                Node *t = head; // A1
+                while(t->nextAddress != tail )
+                {
+                    t = t->nextAddress;  // A3->ne->ne
+                }
+                Node *ln = tail; 
+                t->nextAddress = NULL; 
+                tail = t;
+                length--;
+                return ln->value;
+            }
+            return -1; 
+        }
+}; 
+
+
+
+class StackArray
+{
+public:
+    int *stack; 
+    int top;
+    int stackSize; 
+
+    StackArray(int sz)
+    {
+        stack = (int*)malloc(sizeof(int) * sz); 
+        top = -1; 
+        stackSize = sz; 
+    }
+
+    bool isEmpty()
+    {
+        if(top == -1 )
+        {
+            return true;
+        }
+        return false;
+    }
+    
+    bool isFull()
+    {
+        if(top == stackSize - 1 )
+        {
+            return true;
+        }
+        return false;
+    }
+
+    void push(int val)
+    {
+        if(isFull() == true)
+        {
+            cout << "overflow!!!\n";
+        }
+        else
+        {
+            top++;
+            stack[top] = val; 
+        }
+    }
+
+    int pop(int val)
+    {
+        if(isEmpty() == true)
+        {
+            cout << "underFlow!!!\n";
+            return -1;
+        }
+        else
+        {
+            int r = stack[top];
+            top--;
+            return r; 
+        }
+    }
+
+    int peekElement()
+    {
+        if(isEmpty())
+        {
+            cout << "underFlow!!!";
+            return -1;
+        }
+        return stack[top];
+    }
+};
+
 
 class CircullarLinkedList
 {
@@ -426,10 +598,21 @@ class CircullarLinkedList
 }; 
 
 
+/* 
+12
+
+
+ */
+
 int main()
 {
+    int arr[5]; 
+
+    StackArray p = StackArray(5); 
+
     // instert and delete
         // beg end mid
+    
     LinkedList link1 = LinkedList();
     link1.insertbeg(10);
     link1.insertbeg(20);
