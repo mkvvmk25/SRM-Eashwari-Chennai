@@ -601,7 +601,7 @@ class CircullarLinkedList
 
 // infix to post fix 
 // h%a+(b-c)*d/e%f
-// 1 + 2
+
 
 
 bool validPara(string s)
@@ -646,21 +646,89 @@ bool validPara(string s)
     }
 }
 
+int checkRank(char c)
+{
+    if(c == '(' ||  c == ')')
+    {
+        return 3;
+    }
+    else if(c == '+' ||  c == '-')
+    {
+        return 1;
+    }
+    else if(c == '/' ||  c == '%' ||  c == '*' )
+    {
+        return 2;
+    }
+    return 0;
+
+}
+
+string infToPost(string s)
+{
+    // h%a+(b-c)*d/e%f
+    // i
+    vector<char> stack; // op
+    vector<char> post;    // oprands
+    for(int i = 0; i < s.size(); i++)
+    {
+        if(s[i] >= 'a'  && s[i] <= 'z')
+        {
+            post.push_back(s[i]);
+        }
+        else 
+        {
+            if(s[i] == '(')
+            {
+                stack.push_back(s[i]); 
+            }
+            else if(s[i] == ')')
+            {
+                while( stack[stack.size() - 1] != '(') 
+                {
+                    char chr = stack[stack.size() - 1]; 
+                    stack.pop_back(); 
+                    post.push_back(chr); 
+                }
+                stack.pop_back();  // 
+            }
+            else // + - / * %
+            {
+                int incChrRank = checkRank(s[i]);
+                while(
+                    stack.size() != 0 && 
+                    stack[stack.size() - 1] != '('  && 
+                    incChrRank <= checkRank( stack[stack.size() - 1]) 
+                    )
+                {
+                    char chr = stack[stack.size() - 1]; 
+                    stack.pop_back(); 
+                    post.push_back(chr); 
+                }
+                stack.push_back(s[i]); 
+            }
+        }
+    }
+
+    while( stack.size() != 0)
+    {
+        char chr = stack[stack.size() - 1]; 
+        stack.pop_back(); 
+        post.push_back(chr); 
+    }
+    string ans = ""; 
+    for(int i = 0; i < post.size(); i++)
+    {
+        ans = ans + post[i];
+    }
+
+    return ans; 
+}
+
 int main()
 {
-    string h = "{){()}";
-    bool ans = validPara(h); 
-
-    // int arr[5]; 
-    // StackLinkedList  p1 = StackLinkedList(); 
-
-    // vector<int> p; 
-    // p.push_back(10);
-    // p.push_back(20);
-    // p.push_back(30);
-    // p.push_back(40);
-    // cout << p[3] << "\n";
-    // p.pop_back(); 
-    // cout << p.size() << "\n";
+    string h = "h%a+(b-c)*d/e%f";
+    string ans = infToPost(h);
+    cout << ans; 
 }
 
