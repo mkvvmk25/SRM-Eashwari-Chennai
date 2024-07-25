@@ -6,6 +6,7 @@ class Node
     public:
         int value;
         Node *nextAddress;
+
         Node(int val)
         {
             value = val;
@@ -13,20 +14,21 @@ class Node
         }
 };
 
-class LinkedList 
+
+class LinkedList
 {
     public:
         Node *head;
         Node *tail;
         int length;
-    
+     
         LinkedList()
         {
             head = NULL; 
             tail = NULL; 
             length = 0; 
         }
-        
+
         void printLL()
         {
             Node *temp = head;
@@ -57,7 +59,7 @@ class LinkedList
             }
             length++;
         }
-        
+
         void insertEnd(int val)
         {
             Node *newNode = new Node(val); 
@@ -112,8 +114,46 @@ class LinkedList
                 newNode->nextAddress = aftNode; 
                 befNode->nextAddress = newNode; 
                 length++;
-            
             }
+        }
+
+        int deleteMid(int val, int pos)
+        {
+            if(pos <= 1)
+            {
+                return deleteBeg();
+            }
+            else if(pos >= length)
+            {
+                return deleteEnd(); 
+            }
+            else 
+            {
+                Node *befNode; // A2
+                Node *aftNode; // A4
+                Node *posNode; // A3
+                // pos = 3 
+                befNode = head; // A1 
+                int currPos = 1;
+                while(1)
+                {
+                    //   2 == 2
+                    if(currPos == pos - 1)
+                    {
+                        posNode = befNode->nextAddress;  
+                        aftNode = befNode->nextAddress->nextAddress; // A3
+                        break;
+                    }
+                    befNode = befNode->nextAddress; // A2 
+                    currPos++; 
+                }
+
+                befNode->nextAddress = aftNode; 
+                posNode->nextAddress = NULL; 
+                length--;
+                return posNode->value;
+            }
+            return -1;
         }
 
         int deleteBeg()
@@ -142,6 +182,7 @@ class LinkedList
             }
             return -1; 
         }
+
         int deleteEnd()
         {
             if(head == NULL)
@@ -176,6 +217,9 @@ class LinkedList
         }
 }; 
 
+
+
+
 int main()
 {
     // instert and delete
@@ -198,5 +242,3 @@ int main()
     link1.printLL();
 }
 
-
-// https://bit.ly/CC-240724
