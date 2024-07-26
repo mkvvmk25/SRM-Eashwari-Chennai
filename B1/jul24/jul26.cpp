@@ -936,6 +936,60 @@ void quickSort(int *arr, int n, int low, int high)
 }
 
 
+void merge(int *arr, int n, int low, int high, int mid)
+{
+    int rs =  high - (mid + 1) + 1;
+    int ls = mid - low + 1; 
+
+    int leftArr[ls];
+    int rightArr[rs]; 
+    int ind = low; // 0
+    for(int i = 0; i < ls; i++)
+    {
+        leftArr[i] = arr[ind]; 
+        ind++; 
+    }
+    for(int i = 0; i < ls; i++)
+    {
+        rightArr[i] = arr[ind]; 
+        ind++; 
+    }
+
+
+    int i = 0, j = 0 , k = low; 
+
+    while( i < ls && j < rs)
+    {
+        if(leftArr[i] < rightArr[j])
+        {
+            arr[k] = leftArr[i];
+            i++;
+            k++; 
+        }
+        else
+        {
+            arr[k] = rightArr[j];
+            j++;
+            k++; 
+        }
+    }
+
+
+    while( i < ls)
+    {
+        arr[k] = leftArr[i];
+        i++;
+        k++; 
+    }
+
+    while(j < rs)
+    {
+        arr[k] = rightArr[j];
+        j++;
+        k++; 
+    }
+
+}
 
 int main()
 {
@@ -944,4 +998,3 @@ int main()
     int ele = 12;
 
 }
-
