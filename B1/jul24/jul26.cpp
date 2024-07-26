@@ -840,23 +840,103 @@ int bS(int *arr, int n, int ele)
     return -1; 
 }
 
+void insertionSort(int *arr, int n)
+{
+    for(int i = 1; i < n; i++)
+    {
+        int j = i - 1; 
+        int k = arr[i]; 
+        // shifting 
+        // 
+
+        // [ 4 5 6 7]
+        //   0 1 2 3  4
+        //   -4-3-2-1
+
+        while(k < arr[j] && j >= 0 )
+        {
+            arr[j+1] = arr[j]; 
+            j--;
+        }
+
+        arr[j+1] = k; 
+    }
+}
+
+void bubble(int *arr, int n)
+{
+    for(int i = 0; i < n; i++)
+    {
+        for(int j = i + 1; j < n; j++)
+        {
+            // swap 
+            swap(arr[i], arr[j]); 
+        }
+    }
+}
+
+
+void selectionSort(int *arr, int n) 
+{
+    for(int i = 0; i < n; i++)
+    {
+        int minI = i; 
+        for(int j = i + 1; j < n;j++)
+        {
+            if(arr[j] < arr[minI])
+            {
+                minI = j;
+            }
+        } 
+
+        swap(arr[i], arr[minI]);
+    }
+}
+
+
+int partitionIndex(int *arr, int n,int low, int high)
+{
+    int pE = arr[low]; 
+    int start = low; 
+    int end = high; 
+    while(start < end)
+    {
+        while(arr[start] <= pE)
+        {
+            start++;
+        }
+        while(arr[end] > pE)
+        {
+            end--;
+        }
+
+        if(start < end)
+        {
+            swap(arr[start], arr[end]);
+        }
+    }
+
+    // swap pE with end 
+    if( low != end)
+    {
+        swap(arr[low],arr[end]);
+    }
+
+    return end; 
+}
+
+void quickSort(int *arr, int n)
+{
+
+}
+
+
 
 int main()
 {
-    int a = 5 / 2; 
-    //            l           m           h
-
-    //            l   m  h=m-1     
-    //            l
-    //            h=m-1
-    //            m
-    //            h   l
-
-    //            0   1  2    3  4  5  6  7
-    int arr[8] = {10,15,20,   25,30,35,40,45};
-
-    int ele = 12; 
-
+   
+    int arr[8] = {1,0,12,3,4};
+    int ele = 12;
 
 }
 
