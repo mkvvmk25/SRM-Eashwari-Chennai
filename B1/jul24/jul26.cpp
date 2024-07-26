@@ -804,13 +804,59 @@ string infToPost(string s)
     return ans; 
 }
 
+/* 
+    search
+        LS
 
+        BS
+            divide and Conq
+
+ */
+
+int bS(int *arr, int n, int ele)
+{
+    int low = 0;
+    int high = n - 1; 
+    while(low <= high)
+    {
+        int mid = (low + high) / 2; // 3
+        if(arr[mid] == ele)
+        {
+            return mid; 
+        }
+        // left search 
+        else if( ele < arr[mid])
+        {
+            // low remains same 
+            high = mid - 1; 
+        }
+        else if( ele > arr[mid])
+        {
+            // high remains same 
+            low = mid + 1; 
+        }
+
+    }
+    return -1; 
+}
 
 
 int main()
 {
-    string h = "h%a+(b-c)*d/e%f";
-    string ans = infToPost(h);
-    cout << ans; 
+    int a = 5 / 2; 
+    //            l           m           h
+
+    //            l   m  h=m-1     
+    //            l
+    //            h=m-1
+    //            m
+    //            h   l
+
+    //            0   1  2    3  4  5  6  7
+    int arr[8] = {10,15,20,   25,30,35,40,45};
+
+    int ele = 12; 
+
+
 }
 
