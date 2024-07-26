@@ -925,9 +925,14 @@ int partitionIndex(int *arr, int n,int low, int high)
     return end; 
 }
 
-void quickSort(int *arr, int n)
+void quickSort(int *arr, int n, int low, int high)
 {
-
+    if( low < high)
+    {
+        int pi = partitionIndex(arr, n, low, high); 
+        quickSort(arr,n,low , pi - 1);   // LH 
+        quickSort(arr, n,  pi + 1 ,high);  // RH 
+    }
 }
 
 
