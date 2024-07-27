@@ -141,8 +141,7 @@ class BST
 
             cout << "\n"; 
         }
-
-
+        
         Node* insert(int val, Node *myroot)
         {
             if(myroot == NULL)
@@ -162,18 +161,89 @@ class BST
                 myroot->rightAdd = 
                     insert(val, myroot->rightAdd); 
             }
-
             return root; 
-
-
         }
 
+        void inOrder(Node *myroot)
+        {
+            if(myroot != NULL)
+            {
+                // L
+                inOrder(myroot->leftAdd);
+                // Ro
+                cout << myroot->val <<" "; 
+                // R
+                inOrder(myroot->rightAdd);
+            }
+        }
+        void preOrder(Node *myroot)
+        {
+            if(myroot != NULL)
+            {
+                 // Ro
+                cout << myroot->val <<" "; 
+                // L
+                inOrder(myroot->leftAdd);
+                // R
+                inOrder(myroot->rightAdd);
+            }
+        }
+        void postOrder(Node *myroot)
+        {
+            if(myroot != NULL)
+            {
+                // L
+                inOrder(myroot->leftAdd);
+                // R
+                inOrder(myroot->rightAdd);
+                 // Ro
+                cout << myroot->val <<" "; 
+            }
+        }
+        int height(Node *myroot)
+        {
+            if( myroot == NULL )
+            {
+                return 0; 
+            } 
 
+            int leftH = 
+                height(myroot->leftAdd); // 0
+
+            
+            int rightH = 
+                height(myroot->rightAdd); // 0
+
+
+            if(leftH > rightH)
+            {
+                return leftH + 1;
+            }
+            return rightH + 1;
+            
+            
+ 
+        }
 
 };
 
+
+void fun(int n)
+{
+    if(n == 0)
+    {
+        return; 
+    }
+    cout << n << " ";
+    fun(n - 1);
+    cout << n <<" "; 
+    // return; 
+}
+
 int main()
 {
+    fun(3);
+
     BST tree = BST(); 
 
     tree.root = tree.insert(10, tree.root);  // a10
