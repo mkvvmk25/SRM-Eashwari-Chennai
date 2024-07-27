@@ -103,56 +103,138 @@ class CBT
         }
 };
 
+class BST 
+{
+    public:
+        Node *root;
+        
+        BST()
+        {
+            root = NULL; 
+        }
+        
+        void print()
+        {
+            queue<Node*> que; 
+
+            que.push(root); 
+            while(que.size() != 0)
+            {
+                Node *stand = que.front();  // a2 
+                que.pop(); 
+
+                if( stand->leftAdd != NULL)
+                {
+                    // its has a left child 
+                    que.push(  stand->leftAdd ); 
+                }
+                if( stand->rightAdd != NULL)
+                {
+                    // its has a right child 
+                    que.push(  stand->rightAdd ); 
+                }
+
+                cout << stand->val << " "; 
+                // print the poped node value
+
+            }
+
+            cout << "\n"; 
+        }
+
+
+        Node* insert(int val, Node *myroot)
+        {
+            if(myroot == NULL)
+            {
+                Node *newNode = new Node(val);
+                return newNode; 
+            }
+            // left insert 
+            else if(val < myroot->val)
+            {
+                myroot->leftAdd = 
+                    insert(val, myroot->leftAdd); 
+            }
+            // right insert
+            else if(val > myroot->val)
+            {
+                myroot->rightAdd = 
+                    insert(val, myroot->rightAdd); 
+            }
+
+            return root; 
+
+
+        }
+
+
+
+};
+
 int main()
 {
+    BST tree = BST(); 
 
-    CBT tree = CBT(); 
-    tree.root = tree.insert(1); // a1
-    tree.root = tree.insert(2); // a2
+    tree.root = tree.insert(10, tree.root);  // a10
+    //                       10,  NULL
+    tree.root = tree.insert(2 , tree.root);
+    //                       2, a10 
+
+    tree.root = tree.insert(15); 
+    tree.root = tree.insert(7); 
+    tree.root = tree.insert(20); 
     tree.root = tree.insert(3); 
-    tree.root = tree.insert(4); 
-    tree.root = tree.insert(5); 
-
-    tree.print();
+    tree.root = tree.insert(15); 
 
 
-    // // Node *obj = (Node*)malloc(   sizeof(Node) );  
-    // // obj->leftAdd = NULL;
-    // // obj->rightAdd = NULL; 
-    // // obj->val = 10; 
+    // CBT tree = CBT(); 
+    // tree.root = tree.insert(1); // a1
+    // tree.root = tree.insert(2); // a2
+    // tree.root = tree.insert(3); 
+    // tree.root = tree.insert(4); 
+    // tree.root = tree.insert(5); 
 
-    // Node *a1 = new Node(1);
-    // Node *a2 = new Node(2);
-    // Node *a3 = new Node(3);
-    // Node *a4 = new Node(4); 
+    // tree.print();
 
-    // a1->leftAdd = a2; 
-    // a1->rightAdd = a3;
-    // a2->leftAdd = a4; 
 
-    // queue<Node*> que; 
+    // // // Node *obj = (Node*)malloc(   sizeof(Node) );  
+    // // // obj->leftAdd = NULL;
+    // // // obj->rightAdd = NULL; 
+    // // // obj->val = 10; 
 
-    // que.push(a1); 
-    // while(que.size() != 0)
-    // {
-    //     Node *stand = que.front();  // a2 
-    //     que.pop(); 
+    // // Node *a1 = new Node(1);
+    // // Node *a2 = new Node(2);
+    // // Node *a3 = new Node(3);
+    // // Node *a4 = new Node(4); 
 
-    //     if( stand->leftAdd != NULL)
-    //     {
-    //         // its has a left child 
-    //         que.push(  stand->leftAdd ); 
-    //     }
-    //     if( stand->rightAdd != NULL)
-    //     {
-    //         // its has a right child 
-    //         que.push(  stand->rightAdd ); 
-    //     }
+    // // a1->leftAdd = a2; 
+    // // a1->rightAdd = a3;
+    // // a2->leftAdd = a4; 
 
-    //     cout << stand->val << " "; 
-    //     // print the poped node value
+    // // queue<Node*> que; 
 
-    // }
+    // // que.push(a1); 
+    // // while(que.size() != 0)
+    // // {
+    // //     Node *stand = que.front();  // a2 
+    // //     que.pop(); 
+
+    // //     if( stand->leftAdd != NULL)
+    // //     {
+    // //         // its has a left child 
+    // //         que.push(  stand->leftAdd ); 
+    // //     }
+    // //     if( stand->rightAdd != NULL)
+    // //     {
+    // //         // its has a right child 
+    // //         que.push(  stand->rightAdd ); 
+    // //     }
+
+    // //     cout << stand->val << " "; 
+    // //     // print the poped node value
+
+    // // }
 
     
 }
