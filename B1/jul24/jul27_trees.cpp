@@ -164,6 +164,55 @@ class BST
             return root; 
         }
 
+        Node* deleteNode(int val, Node *myroot)
+        {  
+            if(val < myroot->val)
+            {
+                myroot->leftAdd = 
+                    deleteNode(val, myroot->leftAdd); 
+            }
+            else if(val > myroot->val)
+            {
+                myroot->rightAdd = 
+                    deleteNode(val, myroot->rightAdd); 
+            }
+            else 
+            {
+                if(myroot->leftAdd == NULL && 
+                    myroot->rightAdd == NULL)
+                    {
+                        return NULL; 
+                    }
+                else if(myroot->leftAdd != NULL && 
+                    myroot->rightAdd == NULL)
+                    {
+                        return myroot->leftAdd; 
+                    }
+                else if(myroot->leftAdd == NULL && 
+                    myroot->rightAdd != NULL)
+                    {
+                        return myroot->rightAdd; 
+                    }
+                else 
+                {
+                    Node *leftSubRoot = myroot->leftAdd; 
+                    Node *temp = leftSubRoot;  // a25 
+                    while(temp->rightAdd != NULL)
+                    {
+                        temp = temp->rightAdd; // a30 
+                    }
+
+                    myroot->leftAdd = deleteNode(temp->val, leftSubRoot); 
+
+                    myroot->val = temp->val; 
+
+                }
+                
+            }
+
+            return root; 
+        }
+
         void inOrder(Node *myroot)
         {
             if(myroot != NULL)
@@ -206,25 +255,16 @@ class BST
             {
                 return 0; 
             } 
-
             int leftH = 
                 height(myroot->leftAdd); // 0
-
-            
             int rightH = 
                 height(myroot->rightAdd); // 0
-
-
             if(leftH > rightH)
             {
                 return leftH + 1;
             }
             return rightH + 1;
-            
-            
- 
         }
-
 };
 
 
