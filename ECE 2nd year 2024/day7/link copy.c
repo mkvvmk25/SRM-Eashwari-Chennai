@@ -17,76 +17,70 @@ struct link
 };
 typedef struct link Link; 
 
-void printLL(Link *linkptr)
+void printLL(struct node *head)
 {
   //    N != N
-  Node *tem = linkptr->head;
-  while(tem != NULL)// 
+  while(head != NULL)// 
   {
-    printf("%d ", tem->val); // 10 20 30
-    tem=tem->nextAdd; // 2001 3001 NULL
+    printf("%d ", head->val); // 10 20 30
+    head=head->nextAdd; // 2001 3001 NULL
   }
 }
 
-void insertEnd(Link *linkptr,  int n)
+void insertEnd(Node **head1, Node **tail1, int n)
 {
   // create a memory
 
-  Node *newNode = (Node *)malloc(sizeof(Node)); // 5001
+  Node *newNode = (Node *)malloc(sizeof(Node)); // a20
   newNode->val = n;
   newNode->nextAdd = NULL;
 
-  linkptr->len++;
+  nodelen++;
 
   // check the list is emt or not ?
-  if (linkptr->head == NULL)
+  if (*head1 == NULL)
   {
-    linkptr->head = newNode;
-    linkptr->tail = newNode; 
+    *head1 = newNode;
+    *tail1 = newNode; 
   }
   else 
   {
-    linkptr->tail->nextAdd = newNode; 
-    linkptr->tail = newNode; 
+    (*tail1)->nextAdd = newNode; 
+    *tail1 = newNode; 
   }
 }
 
-
-void insertBeg(Link *linkptr,  int n)
+void insertBeg(Node **head1, Node **tail1, int n)
 {
   // create a memory
-
-  Node *newNode = (Node *)malloc(sizeof(Node)); // 5001
+  Node *newNode = (Node *)malloc(sizeof(Node)); // a20
   newNode->val = n;
   newNode->nextAdd = NULL;
 
-  linkptr->len++;
+  nodelen++; 
 
   // check the list is emt or not ?
-  if (linkptr->head == NULL)
+  if( *head1 == NULL)
   {
-    linkptr->head = newNode;
-    linkptr->tail = newNode; 
+    *head1 = newNode;
+    *tail1 = newNode; 
   }
   else 
   {
-    newNode->nextAdd = linkptr->head;
-    linkptr->head = newNode; 
+    newNode->nextAdd = *head1; 
+    *head1 = newNode; 
   }
 }
 
-void insertMid(Link *linkptr, int n, int loc)
+void insertMid(Node **head1, Node **tail1, int n, int loc)
 {
-
-  // Link *linkptr = &link1
-
   if(loc== 1)
   {
-    insertBeg(linkptr, n);
+    insertBeg(head1, tail1, n);
   }
-  else if(loc  > linkptr->len)
+  else if(loc  > nodelen)
   {
-    insertEnd(linkptr, n);
+    insertEnd(head1, tail1, n);
   }
   else 
   {
@@ -97,7 +91,7 @@ void insertMid(Link *linkptr, int n, int loc)
 
     Node *prevAdd;
     Node *currAdd;
-    Node *temp = linkptr->head; // a10 
+    Node *temp = *head1; // a10 
     // loc = 3
     int i = 1; 
     while(temp != NULL)
@@ -118,35 +112,11 @@ void insertMid(Link *linkptr, int n, int loc)
     newNode->nextAdd = currAdd;
     prevAdd->nextAdd = newNode;
 
-    linkptr->len++;
+    nodelen++;
   }
 }
 
 void deteleEnd(struct link *linkptr )
-{
-  if(linkptr->head == NULL)
-  {
-    printf("no ele \n");
-  }
-  else if(linkptr->head == linkptr->tail)
-  {
-    linkptr->head = NULL; 
-    linkptr->tail = NULL;
-    linkptr->len--;
-  }
-  else 
-  {
-    Node *tem = linkptr->head;
-    while(tem->nextAdd->nextAdd != NULL)
-    {
-      tem = tem->nextAdd; 
-    }
-
-    tem->nextAdd = NULL; 
-    linkptr->len--;
-  }
-}
-void deteleBeg(struct link *linkptr )
 {
   // // head link
   // linkptr->head; // 1001
@@ -160,13 +130,16 @@ void deteleBeg(struct link *linkptr )
   else if(linkptr->head == linkptr->tail)
   {
     linkptr->head = NULL; 
-    linkptr->tail = NULL;
-    linkptr->len--;
+    linkptr->tail = NULL; 
   }
   else 
   {
     Node *tem = linkptr->head;
-    linkptr->head = linkptr->head->nextAdd;
+    while(tem->nextAdd->nextAdd != NULL)
+    {
+      tem = tem->nextAdd; 
+    }
+
     tem->nextAdd = NULL; 
   }
 }
@@ -183,15 +156,6 @@ int main()
   link1.head = NULL;
   link1.tail = NULL;
   link1.len = 0; 
-
-  insertEnd(&link1, 10); 
-  insertEnd(&link1, 20); 
-  insertEnd(&link1, 30);
-  deteleEnd(&link1);
-  insertMid(&link1, 80, 3); 
-  deteleEnd(&link1);
-  insertBeg(&link1, 60); 
-
   
   printLL(&link1); 
 }
