@@ -26,6 +26,7 @@ void printLL(Link *linkptr)
     printf("%d ", tem->val); // 10 20 30
     tem=tem->nextAdd; // 2001 3001 NULL
   }
+  printf("\n");
 }
 
 void insertEnd(Link *linkptr,  int n)
@@ -34,6 +35,7 @@ void insertEnd(Link *linkptr,  int n)
 
   Node *newNode = (Node *)malloc(sizeof(Node)); // 5001
   newNode->val = n;
+  printf("%d*\n", newNode->val);
   newNode->nextAdd = NULL;
 
   linkptr->len++;
@@ -46,11 +48,12 @@ void insertEnd(Link *linkptr,  int n)
   }
   else 
   {
+    printf("%d*\n", linkptr->tail->val);
+  
     linkptr->tail->nextAdd = newNode; 
     linkptr->tail = newNode; 
   }
 }
-
 
 void insertBeg(Link *linkptr,  int n)
 {
@@ -142,10 +145,12 @@ void deteleEnd(struct link *linkptr )
       tem = tem->nextAdd; 
     }
 
-    tem->nextAdd = NULL; 
+    tem->nextAdd = NULL;
+    linkptr->tail = tem;
     linkptr->len--;
   }
 }
+
 void deteleBeg(struct link *linkptr )
 {
   // // head link
@@ -167,7 +172,7 @@ void deteleBeg(struct link *linkptr )
   {
     Node *tem = linkptr->head;
     linkptr->head = linkptr->head->nextAdd;
-    tem->nextAdd = NULL; 
+    tem->nextAdd = NULL;
   }
 }
 
@@ -201,9 +206,6 @@ void deleteMid(Link *linkptr, int loc)
     currAdd->nextAdd = NULL; 
   }
 }
-
-// https://github.com/mkvvmk25/SRM-Eashwari-Chennai
-
 int main()
 {
   struct link link1;
@@ -218,13 +220,18 @@ int main()
   insertEnd(&link1, 10); 
   insertEnd(&link1, 20); 
   insertEnd(&link1, 30);
-  deteleEnd(&link1);
-  insertMid(&link1, 80, 3); 
-  deteleEnd(&link1);
-  insertBeg(&link1, 60); 
+  printLL(&link1);
+  printf("%d\n", link1.len);
 
-  
-  printLL(&link1); 
+  deteleEnd(&link1);
+  printLL(&link1);
+  printf("--%d\n", link1.len);
+
+  insertMid(&link1, 80, 3); 
+  printLL(&link1);
+  printf("%d\n", link1.len);
+
+
 }
   
   // Node *t1 = (Node *)malloc(sizeof(Node));
