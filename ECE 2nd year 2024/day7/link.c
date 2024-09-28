@@ -171,6 +171,37 @@ void deteleBeg(struct link *linkptr )
   }
 }
 
+void deleteMid(Link *linkptr, int loc)
+{
+  if(loc <= 1) 
+  {
+    deteleBeg(linkptr); 
+  }
+  else if(loc >= linkptr->len)
+  {
+    deteleEnd(linkptr); 
+  }
+  else 
+  {
+    Node *prevAdd = linkptr->head; // 1001
+    Node *currAdd;
+    Node *afterAdd;
+
+    int i = 1; 
+    while( i != loc - 1 )
+    {
+      prevAdd = prevAdd->nextAdd; // 2001
+      i++; // 2
+    }
+
+    currAdd = prevAdd->nextAdd;  // 3001
+    afterAdd = currAdd->nextAdd; // 4001
+
+    prevAdd->nextAdd = afterAdd; 
+    currAdd->nextAdd = NULL; 
+  }
+}
+
 // https://github.com/mkvvmk25/SRM-Eashwari-Chennai
 
 int main()
