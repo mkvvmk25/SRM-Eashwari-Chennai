@@ -35,16 +35,29 @@ Node* createNode(int n)
   return newNode; // a1
 }
 
-void printLL(Link *linkptr)
+void printLL(Link *linkptr, char dir)
 {
   //    N != N
-  Node *tem = linkptr->head;
-  while(tem != NULL)// 
+  if(dir == 'F' || dir == 'f')
   {
-    printf("%d ", tem->val); // 10 20 30
-    tem=tem->nextAdd; // 2001 3001 NULL
+    Node *tem = linkptr->head;
+    while(tem != NULL)// 
+    {
+      printf("%d ", tem->val); // 10 20 30
+      tem=tem->nextAdd; // 2001 3001 NULL
+    }
+    printf("\n");
   }
-  printf("\n");
+  else
+  {
+    Node *tem = linkptr->tail;
+    while(tem != NULL)// 
+    {
+      printf("%d ", tem->val); // 10 20 30
+      tem=tem->prevAdd; // 2001 3001 NULL
+    }
+    printf("\n");
+  }
 }
 
 void insertEnd(Link *linkptr,  int n)
@@ -64,7 +77,8 @@ void insertEnd(Link *linkptr,  int n)
   else 
   {
     // printf("%d*\n", linkptr->tail->val);
-    linkptr->tail->nextAdd = newNode; 
+    linkptr->tail->nextAdd = newNode;
+    newNode->prevAdd = linkptr->tail; 
     linkptr->tail = newNode; 
   }
 }
@@ -72,7 +86,6 @@ void insertEnd(Link *linkptr,  int n)
 void insertBeg(Link *linkptr,  int n)
 {
   // create a memory
-
   Node *newNode = createNode(n); 
 
   linkptr->len++;
@@ -86,6 +99,7 @@ void insertBeg(Link *linkptr,  int n)
   else 
   {
     newNode->nextAdd = linkptr->head;
+    linkptr->head->prevAdd = newNode; 
     linkptr->head = newNode; 
   }
 }
@@ -107,7 +121,6 @@ void insertMid(Link *linkptr, int n, int loc)
   {
     // create a memory
     Node *newNode = createNode(n); 
-
     Node *prevAdd;
     Node *currAdd;
     Node *temp = linkptr->head; // a10 
@@ -131,6 +144,10 @@ void insertMid(Link *linkptr, int n, int loc)
     newNode->nextAdd = currAdd;
     prevAdd->nextAdd = newNode;
 
+    // prev
+    currAdd->prevAdd = newNode;
+    newNode->prevAdd = prevAdd; 
+
     linkptr->len++;
   }
 }
@@ -149,12 +166,9 @@ void deteleEnd(struct link *linkptr )
   }
   else 
   {
-    Node *tem = linkptr->head;
-    while(tem->nextAdd->nextAdd != NULL)
-    {
-      tem = tem->nextAdd; 
-    }
-
+    
+    Node *tem = linkptr->tail->prevAdd;
+    linkptr->tail->prevAdd = NULL; 
     tem->nextAdd = NULL;
     linkptr->tail = tem; //update this!!!!👿
     linkptr->len--;
@@ -183,6 +197,8 @@ void deteleBeg(struct link *linkptr )
     Node *tem = linkptr->head;
     linkptr->head = linkptr->head->nextAdd;
     tem->nextAdd = NULL;
+    linkptr->head->prevAdd = NULL; 
+    linkptr->len--;
   }
 }
 
@@ -212,74 +228,17 @@ void deleteMid(Link *linkptr, int loc)
     currAdd = prevAdd->nextAdd;  // 3001
     afterAdd = currAdd->nextAdd; // 4001
 
+
     prevAdd->nextAdd = afterAdd; 
-    currAdd->nextAdd = NULL; 
+    currAdd->nextAdd = NULL;
+
+    afterAdd->prevAdd = prevAdd;
+    currAdd->prevAdd = NULL;
+
+    linkptr->len--; 
   }
 }
 
-void reverseSLL(Node *head1)
-{
-  Node *prev = NULL;
-  Node *curr = head1;
-  Node *next;
-
-  while( curr != NULL )
-  {
-    next = curr->nextAdd;
-    curr->nextAdd = prev;
-    prev = curr;
-    curr = next;
-  }
-
-  Node *tem = prev; 
-  while(tem != NULL)
-  {
-    printf("%d ", tem->val);
-    tem = tem->nextAdd; 
-  }
-
-  printf("\n");
-}
-
-void reverseSLLLinkPtr(Link *linkptr)
-{
-  Node *prev = NULL;
-  Node *curr = linkptr->head;
-  Node *next;
-
-  while( curr != NULL )
-  {
-    next = curr->nextAdd;
-    curr->nextAdd = prev;
-    prev = curr;
-    curr = next;
-  }
-  linkptr->tail = linkptr->head; 
-  linkptr->head = prev;
-}
-
-int sameLink(Node *head1, Node *head2)
-{
-  Node *t1 = head1;
-  Node *t2 = head2; 
-
-  while(t1 != NULL &&  
-        t2 != NULL &&
-        t1->val == t2->val  )
-  {
-    t1 = t1->nextAdd; 
-    t2 = t2->nextAdd; 
-  }
-
-  if(t1 == NULL && t2 == NULL)
-  {
-    return 1;
-  }
-  else 
-  {
-    return 0;
-  }
-}
 
 int main()
 {
@@ -294,8 +253,9 @@ int main()
   insertEnd(&link1, 40);
   insertEnd(&link1, 50);
   insertEnd(&link1, 60);
+  insertMid(&link1, 100, 3);
+  deleteMid(&link1, 4);
   // link1.head = a1
-  printLL(&link1);
-  reverseSLLLinkPtr(&link1);
-  printLL(&link1);
+  printLL(&link1, 'f');
+  printLL(&link1, 'r');
 }
