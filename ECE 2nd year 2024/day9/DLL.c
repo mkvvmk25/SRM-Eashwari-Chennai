@@ -5,6 +5,8 @@ struct node
 {
   int val;
   struct node *nextAdd; 
+  struct node *prevAdd; 
+
 };
 typedef struct node Node; 
 
@@ -16,6 +18,22 @@ struct link
 };
 
 typedef struct link Link; 
+/* 
+ Node *newNode = (Node *)malloc(sizeof(Node)); // 5001
+  newNode->val = n;
+  // printf("%d*\n", newNode->val);
+  newNode->nextAdd = NULL;
+
+ */
+
+Node* createNode(int n)
+{
+  Node *newNode = (Node *)malloc(sizeof(Node)); // a1 
+  newNode->val = n;
+  newNode->nextAdd = NULL;
+  newNode->prevAdd = NULL;
+  return newNode; // a1
+}
 
 void printLL(Link *linkptr)
 {
@@ -32,11 +50,8 @@ void printLL(Link *linkptr)
 void insertEnd(Link *linkptr,  int n)
 {
   // create a memory
-
-  Node *newNode = (Node *)malloc(sizeof(Node)); // 5001
-  newNode->val = n;
-  // printf("%d*\n", newNode->val);
-  newNode->nextAdd = NULL;
+  Node *newNode = createNode(n);
+  // create a return fun to create a newnode and store the the value ?
 
   linkptr->len++;
 
@@ -49,7 +64,6 @@ void insertEnd(Link *linkptr,  int n)
   else 
   {
     // printf("%d*\n", linkptr->tail->val);
-  
     linkptr->tail->nextAdd = newNode; 
     linkptr->tail = newNode; 
   }
@@ -59,9 +73,7 @@ void insertBeg(Link *linkptr,  int n)
 {
   // create a memory
 
-  Node *newNode = (Node *)malloc(sizeof(Node)); // 5001
-  newNode->val = n;
-  newNode->nextAdd = NULL;
+  Node *newNode = createNode(n); 
 
   linkptr->len++;
 
@@ -94,9 +106,7 @@ void insertMid(Link *linkptr, int n, int loc)
   else 
   {
     // create a memory
-    Node *newNode = (Node *)malloc(sizeof(Node)); // a20
-    newNode->val = n;
-    newNode->nextAdd = NULL;
+    Node *newNode = createNode(n); 
 
     Node *prevAdd;
     Node *currAdd;

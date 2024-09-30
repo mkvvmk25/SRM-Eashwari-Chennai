@@ -1,0 +1,50 @@
+  // Node *t1 = (Node *)malloc(sizeof(Node));
+  // Node *t2 = (Node *)malloc(sizeof(Node));
+  // Node *t3 = (Node *)malloc(sizeof(Node));
+  // Node *t4 = (Node *)malloc(sizeof(Node));
+
+  // t1->val = 10;
+  // t1->nextAdd = t2;
+
+  // t2->val = 20;
+  // t2->nextAdd = t3;
+
+  // t3->val = 30;
+  // t3->nextAdd = t4;
+
+  // t4->val = 40; 
+  // t4->nextAdd = NULL; 
+
+  // Node *head1 = t1 ;
+  // Node *tail = t4;
+
+  // printLL(head1); 
+  // int a = 5;
+  // int a1 = a;
+  // int a2 = a1;
+
+  // int *b = &a;
+  // int *b1 = b; 
+  // int *ptr = (int *)malloc(4);
+  // struct node *ptr = (struct node*)malloc(sizeof(struct node));
+  // Node *ptr = (Node*)malloc(sizeof(Node));
+  // struct node t1;
+  // struct node t2;
+  // struct node t3;
+
+  // t1.val = 10;
+  // t2.val = 20;
+  // t3.val = 30;
+
+  // t1.ptr = &t2;
+  // t2.ptr = &t3;
+  // t3.ptr = NULL;
+
+  // printLL(&t1);
+  // int a = t1.val;
+  // int b = t1.ptr->val;
+  // int c = t1.ptr->ptr->val;
+
+
+
+  // printf("%d %d %d ", a, b ,c);

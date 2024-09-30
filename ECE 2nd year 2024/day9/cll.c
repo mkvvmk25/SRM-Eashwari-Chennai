@@ -17,22 +17,26 @@ struct link
 
 typedef struct link Link; 
 
-void printLL(Link *linkptr)
+void printLL(Link *linkptr) // 
 {
   //    N != N
-  Node *tem = linkptr->head;
-  while(tem != NULL)// 
+  Node *tem = linkptr->head; // a1
+  while( tem != linkptr->tail )// 
   {
-    printf("%d ", tem->val); // 10 20 30
-    tem=tem->nextAdd; // 2001 3001 NULL
+    printf("%d ", tem->val); 
+    tem=tem->nextAdd; 
+    // if(tem == linkptr->head)
+    // {
+    //   break;
+    // }
   }
+  printf("%d ", tem->val); 
   printf("\n");
 }
 
 void insertEnd(Link *linkptr,  int n)
 {
   // create a memory
-
   Node *newNode = (Node *)malloc(sizeof(Node)); // 5001
   newNode->val = n;
   // printf("%d*\n", newNode->val);
@@ -45,20 +49,21 @@ void insertEnd(Link *linkptr,  int n)
   {
     linkptr->head = newNode;
     linkptr->tail = newNode; 
+    linkptr->tail->nextAdd = linkptr->head; 
   }
   else 
   {
     // printf("%d*\n", linkptr->tail->val);
-  
+
     linkptr->tail->nextAdd = newNode; 
     linkptr->tail = newNode; 
+    linkptr->tail->nextAdd = linkptr->head; 
   }
 }
 
 void insertBeg(Link *linkptr,  int n)
 {
   // create a memory
-
   Node *newNode = (Node *)malloc(sizeof(Node)); // 5001
   newNode->val = n;
   newNode->nextAdd = NULL;
@@ -69,12 +74,14 @@ void insertBeg(Link *linkptr,  int n)
   if (linkptr->head == NULL)
   {
     linkptr->head = newNode;
-    linkptr->tail = newNode; 
+    linkptr->tail = newNode;
+    linkptr->tail->nextAdd = linkptr->head; 
   }
   else 
   {
     newNode->nextAdd = linkptr->head;
-    linkptr->head = newNode; 
+    linkptr->head = newNode;
+    linkptr->tail->nextAdd = linkptr->head; 
   }
 }
 
@@ -140,13 +147,16 @@ void deteleEnd(struct link *linkptr )
   else 
   {
     Node *tem = linkptr->head;
-    while(tem->nextAdd->nextAdd != NULL)
+    while(tem->nextAdd->nextAdd 
+          != linkptr->head)
     {
       tem = tem->nextAdd; 
     }
 
-    tem->nextAdd = NULL;
-    linkptr->tail = tem; //update this!!!!👿
+    tem->nextAdd = linkptr->head;
+    Node *deleteNode = linkptr->tail; 
+    linkptr->tail = tem;
+    deleteNode->nextAdd = NULL;
     linkptr->len--;
   }
 }
@@ -173,6 +183,8 @@ void deteleBeg(struct link *linkptr )
     Node *tem = linkptr->head;
     linkptr->head = linkptr->head->nextAdd;
     tem->nextAdd = NULL;
+    linkptr->tail->nextAdd = linkptr->head;
+    linkptr->len--;
   }
 }
 
@@ -192,7 +204,7 @@ void deleteMid(Link *linkptr, int loc)
     Node *currAdd;
     Node *afterAdd;
 
-    int i = 1; 
+    int i = 1;
     while( i != loc - 1 )
     {
       prevAdd = prevAdd->nextAdd; // 2001
@@ -203,7 +215,8 @@ void deleteMid(Link *linkptr, int loc)
     afterAdd = currAdd->nextAdd; // 4001
 
     prevAdd->nextAdd = afterAdd; 
-    currAdd->nextAdd = NULL; 
+    currAdd->nextAdd = NULL;
+    linkptr->len--;
   }
 }
 
@@ -283,9 +296,8 @@ int main()
   insertEnd(&link1, 30);
   insertEnd(&link1, 40);
   insertEnd(&link1, 50);
-  insertEnd(&link1, 60);
-  // link1.head = a1
-  printLL(&link1);
-  reverseSLLLinkPtr(&link1);
+  deleteMid(&link1, 3);
+  deleteMid(&link1, 1);
+  deleteMid(&link1, 6);
   printLL(&link1);
 }
